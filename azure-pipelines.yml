@@ -1,0 +1,19 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: touch DONE.txt
+
+- task: CopyFilesOverSSH@0
+  inputs:
+    sshEndpoint: 'aws-vm'
+    contents: 'DONE.txt'
+    targetFolder: '/home/ubuntu'
+    readyTimeout: '20000'
+
